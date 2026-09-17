@@ -1,6 +1,9 @@
 using ATTILA.CameraSystem;
 using ATTILA.Player;
 using ATTILA.UI;
+using ATTILA.Data;
+using ATTILA.NPC;
+using ATTILA.Gameplay;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +18,7 @@ namespace ATTILA.Environment
             RenderSettings.ambientLight = new Color(.90f, .93f, .86f);
             RenderSettings.fog = false;
             BuildGround(); BuildPath(); BuildYurts(); BuildNature(); BuildFence(); BuildNpcs(); var player = BuildPlayer(); BuildCamera(player.transform); BuildHud();
+            var stage2 = gameObject.AddComponent<Stage2Game>(); stage2.Initialize(player.GetComponent<PlayerController>());
         }
         private void BuildGround() { var ground = Primitive(PrimitiveType.Plane, "Ground", Vector3.zero, new Vector3(5.5f, 1, 5.5f), groundColor);  }
         private void BuildPath()
@@ -48,12 +52,15 @@ namespace ATTILA.Environment
         }
         private void BuildNpcs()
         {
-            CreateNpc(new(-4, 0, 6), "NPC Placeholder 1"); CreateNpc(new(5, 0, 7), "NPC Placeholder 2"); CreateNpc(new(-7, 0, -7), "NPC Placeholder 3");
+            var content = Resources.Load<Stage2Content>("Data/Stage2Content");
+            CreateNpc(new(-4, 0, 6), content.Npc("NPC_Father_01"));
+            CreateNpc(new(5, 0, 7), content.Npc("NPC_Children_01"));
+            CreateNpc(new(-7, 0, -7), content.Npc("NPC_Neutral_01"));
         }
-        private void CreateNpc(Vector3 p, string label)
+        private void CreateNpc(Vector3 p, NpcDefinition definition)
         {
-            var npc = new GameObject(label); npc.transform.position = p + Vector3.up;
-            npc.AddComponent<CharacterController>(); npc.AddComponent<PlayerVisual>();
+            var npc = new GameObject(definition.id); npc.transform.position = p + Vector3.up;
+            npc.AddComponent<CharacterController>(); npc.AddComponent<PlayerVisual>(); npc.AddComponent<NpcInteractable>().Configure(definition);
         }
         private GameObject BuildPlayer()
         {

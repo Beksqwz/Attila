@@ -1,5 +1,7 @@
 using ATTILA.Characters;
 using ATTILA.Core;
+using ATTILA.Save;
+using ATTILA.Quest;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,8 +27,10 @@ namespace ATTILA.UI
             var bust = GameObject.CreatePrimitive(PrimitiveType.Capsule); bust.name = "Neutral Placeholder Portrait"; bust.transform.SetParent(portrait.transform, false); bust.transform.localScale = new Vector3(.48f, .62f, .48f); bust.transform.localPosition = new Vector3(0, -.12f, 0); Object.Destroy(bust.GetComponent<Collider>());
             var name = UiFactory.Text(card.transform, hero != null ? hero.DisplayName : "Белгісіз кейіпкер", 25, TextAnchor.MiddleCenter, UiFactory.Primary); UiFactory.SetRect(name.rectTransform, new Vector2(.5f, .34f), new Vector2(260, 36), Vector2.zero);
             var desc = UiFactory.Text(card.transform, hero != null ? hero.Description : "Уақытша кейіпкер орны", 16, TextAnchor.MiddleCenter, Color.gray); UiFactory.SetRect(desc.rectTransform, new Vector2(.5f, .25f), new Vector2(250, 45), Vector2.zero);
-            var progress = UiFactory.Text(card.transform, "0%", 18, TextAnchor.MiddleCenter, UiFactory.Accent); UiFactory.SetRect(progress.rectTransform, new Vector2(.5f, .16f), new Vector2(220, 30), Vector2.zero);
-            var start = UiFactory.Button(card.transform, "Бастау", () => SceneLoader.Load(SceneId.AulPrototype)); UiFactory.SetRect(start.GetComponent<RectTransform>(), new Vector2(.5f, .07f), new Vector2(220, 46), Vector2.zero);
+            bool hasSave = hero != null && SaveService.HasSaveFor(hero.HeroId);
+            var state = new QuestState();
+            var progress = UiFactory.Text(card.transform, hasSave ? state.ProgressPercent + "%" : "0%", 18, TextAnchor.MiddleCenter, UiFactory.Accent); UiFactory.SetRect(progress.rectTransform, new Vector2(.5f, .16f), new Vector2(220, 30), Vector2.zero);
+            var start = UiFactory.Button(card.transform, hasSave ? "Продолжить" : "Бастау", () => { if (hero != null) SaveService.SelectHero(hero.HeroId); SceneLoader.Load(SceneId.AulPrototype); }); UiFactory.SetRect(start.GetComponent<RectTransform>(), new Vector2(.5f, .07f), new Vector2(220, 46), Vector2.zero);
         }
         private static void CreateLockedCard(Transform root, Vector2 anchor)
         {

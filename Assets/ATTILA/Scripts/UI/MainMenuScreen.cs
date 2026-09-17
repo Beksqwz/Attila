@@ -13,7 +13,7 @@ namespace ATTILA.UI
             var title = UiFactory.Text(canvas.transform, "ATTILA", 76, TextAnchor.MiddleCenter, UiFactory.Primary); UiFactory.SetRect(title.rectTransform, new Vector2(.5f, .74f), new Vector2(600, 110), Vector2.zero);
             var sub = UiFactory.Text(canvas.transform, "", 20, TextAnchor.MiddleCenter, UiFactory.Accent); UiFactory.SetRect(sub.rectTransform, new Vector2(.5f, .64f), new Vector2(550, 40), Vector2.zero);
             CreateButton(canvas.transform, "Ойнау", 0, () => SceneLoader.Load(SceneId.CharacterSelect), true);
-            CreateButton(canvas.transform, "Энциклопедия", 1, null, false);
+            CreateButton(canvas.transform, "Энциклопедия", 1, () => EncyclopediaScreen.Show(canvas.transform), true);
             CreateButton(canvas.transform, "Киім", 2, null, false);
             CreateButton(canvas.transform, "Баптаулар", 3, null, false);
         }
