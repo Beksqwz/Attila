@@ -48,7 +48,7 @@ namespace ATTILA.UI
         {
             dialoguePanel = UiFactory.Panel(canvas.transform, UiFactory.Background).gameObject;
             UiFactory.SetRect(dialoguePanel.GetComponent<RectTransform>(), new Vector2(.5f, .18f), new Vector2(760, 190), Vector2.zero);
-            dialogueSpeaker = UiFactory.Text(dialoguePanel.transform, string.Empty, 25, TextAnchor.UpperLeft, UiFactory.Primary); UiFactory.SetRect(dialogueSpeaker.rectTransform, new Vector2(.05f, .84f), new Vector2(650, 35), Vector2.zero);
+            dialogueSpeaker = UiFactory.Text(dialoguePanel.transform, string.Empty, 25, TextAnchor.UpperLeft, UiFactory.Primary); UiFactory.SetRect(dialogueSpeaker.rectTransform, new Vector2(.5f, .84f), new Vector2(670, 35), Vector2.zero);
             dialogueText = UiFactory.Text(dialoguePanel.transform, string.Empty, 22, TextAnchor.UpperLeft, Color.black); UiFactory.SetRect(dialogueText.rectTransform, new Vector2(.5f, .50f), new Vector2(670, 75), Vector2.zero);
             dialogueContinue = UiFactory.Button(dialoguePanel.transform, "Жалғастыру", AdvanceDialogue); UiFactory.SetRect(dialogueContinue.GetComponent<RectTransform>(), new Vector2(.85f, .14f), new Vector2(180, 42), Vector2.zero);
             dialoguePanel.SetActive(false);
@@ -65,9 +65,9 @@ namespace ATTILA.UI
         {
             minigamePanel = UiFactory.Panel(canvas.transform, new Color(.55f, .18f, .14f, .91f)).gameObject;
             UiFactory.SetRect(minigamePanel.GetComponent<RectTransform>(), new Vector2(.5f, .92f), new Vector2(450, 82), Vector2.zero);
-            var title = UiFactory.Text(minigamePanel.transform, string.Empty, 21, TextAnchor.UpperLeft, UiFactory.Background); title.name = "Title"; UiFactory.SetRect(title.rectTransform, new Vector2(.06f, .68f), new Vector2(350, 32), Vector2.zero);
-            var rule = UiFactory.Text(minigamePanel.transform, string.Empty, 16, TextAnchor.UpperLeft, UiFactory.Background); rule.name = "Rule"; UiFactory.SetRect(rule.rectTransform, new Vector2(.06f, .26f), new Vector2(350, 28), Vector2.zero);
-            minigameTimer = UiFactory.Text(minigamePanel.transform, string.Empty, 24, TextAnchor.MiddleRight, UiFactory.Background); UiFactory.SetRect(minigameTimer.rectTransform, new Vector2(.91f, .50f), new Vector2(80, 50), Vector2.zero);
+            var title = UiFactory.Text(minigamePanel.transform, string.Empty, 21, TextAnchor.UpperLeft, UiFactory.Background); title.name = "Title"; UiFactory.SetRect(title.rectTransform, new Vector2(.44f, .68f), new Vector2(350, 32), Vector2.zero);
+            var rule = UiFactory.Text(minigamePanel.transform, string.Empty, 16, TextAnchor.UpperLeft, UiFactory.Background); rule.name = "Rule"; UiFactory.SetRect(rule.rectTransform, new Vector2(.5f, .26f), new Vector2(400, 28), Vector2.zero);
+            minigameTimer = UiFactory.Text(minigamePanel.transform, string.Empty, 24, TextAnchor.MiddleRight, UiFactory.Background); UiFactory.SetRect(minigameTimer.rectTransform, new Vector2(.90f, .70f), new Vector2(45, 32), Vector2.zero);
             minigamePanel.SetActive(false);
         }
         public void SetInteractionPrompt(string value) => prompt.text = value;
