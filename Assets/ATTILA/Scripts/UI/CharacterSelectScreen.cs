@@ -1,41 +1,13 @@
 using ATTILA.Characters;
 using ATTILA.Core;
 using ATTILA.Save;
-using ATTILA.Quest;
 using UnityEngine;
 using UnityEngine.UI;
-
 namespace ATTILA.UI
 {
-    public sealed class CharacterSelectScreen : MonoBehaviour
-    {
-        private void Start()
-        {
-            var canvas = UiFactory.CreateCanvas();
-            var background = UiFactory.Panel(canvas.transform, UiFactory.Background); UiFactory.Stretch(background.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-            var title = UiFactory.Text(canvas.transform, "ATTILA", 48, TextAnchor.MiddleCenter, UiFactory.Primary); UiFactory.SetRect(title.rectTransform, new Vector2(.5f, .88f), new Vector2(500, 70), Vector2.zero);
-            var hero = Resources.Load<HeroDefinition>("Data/TEMP_HERO");
-            CreateHeroCard(canvas.transform, hero, new Vector2(.5f, .48f));
-            CreateLockedCard(canvas.transform, new Vector2(.20f, .48f));
-            CreateLockedCard(canvas.transform, new Vector2(.80f, .48f));
-            var back = UiFactory.Button(canvas.transform, "Артқа", () => SceneLoader.Load(SceneId.MainMenu)); UiFactory.SetRect(back.GetComponent<RectTransform>(), new Vector2(.12f, .1f), new Vector2(150, 48), Vector2.zero);
-        }
-        private static void CreateHeroCard(Transform root, HeroDefinition hero, Vector2 anchor)
-        {
-            var card = UiFactory.Panel(root, Color.white); card.name = "TEMP_HERO Card"; UiFactory.SetRect(card.rectTransform, anchor, new Vector2(300, 420), Vector2.zero);
-            var portrait = UiFactory.Panel(card.transform, new Color(.76f, .54f, .40f)); UiFactory.SetRect(portrait.rectTransform, new Vector2(.5f, .70f), new Vector2(238, 240), Vector2.zero);
-            var bust = GameObject.CreatePrimitive(PrimitiveType.Capsule); bust.name = "Neutral Placeholder Portrait"; bust.transform.SetParent(portrait.transform, false); bust.transform.localScale = new Vector3(.48f, .62f, .48f); bust.transform.localPosition = new Vector3(0, -.12f, 0); Object.Destroy(bust.GetComponent<Collider>());
-            var name = UiFactory.Text(card.transform, hero != null ? hero.DisplayName : "Белгісіз кейіпкер", 25, TextAnchor.MiddleCenter, UiFactory.Primary); UiFactory.SetRect(name.rectTransform, new Vector2(.5f, .34f), new Vector2(260, 36), Vector2.zero);
-            var desc = UiFactory.Text(card.transform, hero != null ? hero.Description : "Уақытша кейіпкер орны", 16, TextAnchor.MiddleCenter, Color.gray); UiFactory.SetRect(desc.rectTransform, new Vector2(.5f, .25f), new Vector2(250, 45), Vector2.zero);
-            bool hasSave = hero != null && SaveService.HasSaveFor(hero.HeroId);
-            var state = new QuestState();
-            var progress = UiFactory.Text(card.transform, hasSave ? state.ProgressPercent + "%" : "0%", 18, TextAnchor.MiddleCenter, UiFactory.Accent); UiFactory.SetRect(progress.rectTransform, new Vector2(.5f, .16f), new Vector2(220, 30), Vector2.zero);
-            var start = UiFactory.Button(card.transform, hasSave ? "Продолжить" : "Бастау", () => { if (hero != null) SaveService.SelectHero(hero.HeroId); SceneLoader.Load(SceneId.AulPrototype); }); UiFactory.SetRect(start.GetComponent<RectTransform>(), new Vector2(.5f, .07f), new Vector2(220, 46), Vector2.zero);
-        }
-        private static void CreateLockedCard(Transform root, Vector2 anchor)
-        {
-            var card = UiFactory.Panel(root, new Color(.82f, .75f, .68f)); UiFactory.SetRect(card.rectTransform, anchor, new Vector2(210, 300), Vector2.zero);
-            var text = UiFactory.Text(card.transform, "🔒\nЖақында", 24, TextAnchor.MiddleCenter, UiFactory.Primary); UiFactory.Stretch(text.rectTransform, Vector2.zero, Vector2.one, new Vector2(12, 12), new Vector2(-12, -12));
-        }
-    }
+ public sealed class CharacterSelectScreen : MonoBehaviour
+ {
+  private void Start(){var c=MenuUiKit.Canvas("Character Select Canvas");MenuUiKit.Background(c.transform);MenuUiKit.Header(c.transform,"КЕЙІПКЕРДІ ТАҢДА",()=>SceneLoader.Load(SceneId.MainMenu));var v=Resources.Load<MenuVisualDefinition>("UI/MainMenuVisuals");var hero=Resources.Load<HeroDefinition>("Data/TEMP_HERO");var b=Card(c.transform,"БАТЫР","Жауынгер жолы",.32f,true);MenuUiKit.Portrait(b.transform,v?.character,v?.characterMaterial,new Vector2(.5f,.61f),new Vector2(285,390));var go=MenuPixelButton.Create(b.transform,SaveService.HasSaveFor(hero.HeroId)?"ЖАЛҒАСТЫРУ":"БАСТАУ",()=>{SaveService.SelectHero(hero.HeroId);SceneLoader.Load(SceneId.AulPrototype);});UiFactory.SetRect(go.GetComponent<RectTransform>(),new Vector2(.5f,.07f),new Vector2(250,48),Vector2.zero);var k=Card(c.transform,"ХАН","Билеуші жолы",.68f,false);MenuUiKit.Portrait(k.transform,v?.khan,v?.characterMaterial,new Vector2(.5f,.61f),new Vector2(285,390));var note=UiFactory.Text(k.transform,"ТЕК ТАҢДАУ",17,TextAnchor.MiddleCenter,MenuUiKit.Gold);UiFactory.SetRect(note.rectTransform,new Vector2(.5f,.07f),new Vector2(250,35),Vector2.zero);}
+  private static Image Card(Transform root,string title,string sub,float x,bool selected){var p=MenuUiKit.Panel(root,new Vector2(x,.49f),new Vector2(520,630),selected);var n=UiFactory.Text(p.transform,title,34,TextAnchor.MiddleCenter,MenuUiKit.Gold);n.fontStyle=FontStyle.Bold;UiFactory.SetRect(n.rectTransform,new Vector2(.5f,.25f),new Vector2(420,46),Vector2.zero);var s=UiFactory.Text(p.transform,sub,19,TextAnchor.MiddleCenter,MenuUiKit.Parchment);UiFactory.SetRect(s.rectTransform,new Vector2(.5f,.18f),new Vector2(420,34),Vector2.zero);return p;}
+ }
 }
