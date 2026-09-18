@@ -23,7 +23,7 @@ namespace ATTILA.UI
             return canvas;
         }
 
-        public static void Background(Transform root)
+        public static void Background(Transform root, float veilAlpha = .58f)
         {
             var visuals = Resources.Load<MenuVisualDefinition>("UI/MainMenuVisuals");
             var image = UiFactory.Panel(root, Color.white);
@@ -31,7 +31,7 @@ namespace ATTILA.UI
             image.sprite = visuals != null ? visuals.background : null;
             image.preserveAspect = true;
             UiFactory.Stretch(image.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
-            var veil = UiFactory.Panel(root, new Color(Dark.r, Dark.g, Dark.b, .58f));
+            var veil = UiFactory.Panel(root, new Color(Dark.r, Dark.g, Dark.b, veilAlpha));
             veil.name = "Parchment Burgundy Veil";
             UiFactory.Stretch(veil.rectTransform, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
         }

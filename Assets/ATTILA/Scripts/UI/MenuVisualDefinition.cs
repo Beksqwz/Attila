@@ -8,6 +8,12 @@ namespace ATTILA.UI
     {
         public Sprite background;
         public Sprite logo;
+        public Sprite playButton;
+        public Sprite wardrobeButton;
+        public Sprite encyclopediaButton;
+        public Sprite settingsButton;
+        public Sprite quitButton;
+        public Sprite kereyKhanCard;
         public Sprite character;
         public Sprite khan;
         public Material characterMaterial;

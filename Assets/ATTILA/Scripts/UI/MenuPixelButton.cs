@@ -22,6 +22,7 @@ namespace ATTILA.UI
         private bool hovering;
         private bool pressed;
         private bool selected;
+        private Vector3 targetScale = Vector3.one;
 
         public static Button Create(Transform parent, string labelText, System.Action action)
         {
@@ -78,8 +79,10 @@ namespace ATTILA.UI
             fill.color = pressed ? DarkBurgundy : active ? WarmRed : Burgundy;
             label.color = active ? Color.white : Cream;
             ornamentLeft.color = ornamentRight.color = active ? Cream : Gold;
-            transform.localScale = pressed ? new Vector3(.98f, .98f, 1f) : active ? new Vector3(1.025f, 1.025f, 1f) : Vector3.one;
+            targetScale = pressed ? new Vector3(.96f, .96f, 1f) : active ? new Vector3(1.045f, 1.045f, 1f) : Vector3.one;
         }
+
+        private void Update() => transform.localScale = Vector3.Lerp(transform.localScale, targetScale, Time.unscaledDeltaTime * 16f);
 
         private static Color ColorFromHex(string hex)
         {
